@@ -9,6 +9,7 @@ def main():
     size = int(input("Board Size: "))
 
     for _ in range(100):
+        start = time.thread_time()
         mycv = cvHandler()
         unparsed = mycv.parse_board(size)
         myBoard = Board(raw=unparsed, size=size)
@@ -18,6 +19,9 @@ def main():
         print(myBoard)
 
         mycv.autoSolve(myBoard)
+        timeToSolve = time.thread_time() - start
+        print("Time to solve: " + str(timeToSolve))
+
         break
         #mouse.move(1110, 360)
         #mouse.click()

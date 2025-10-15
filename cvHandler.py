@@ -55,7 +55,7 @@ class cvHandler:
         inverted_binary = ~binary
 
         cnts, hierarchy = cv.findContours(inverted_binary, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
-        boardLst = sorted(cnts, key=cv.contourArea)
+        boardLst = sorted(cnts, key=cv.contourArea, reverse=True)
         roi = x = y = None
 
         for pos in boardLst:
@@ -65,7 +65,7 @@ class cvHandler:
 
             roi = thisImg[y:y + h, x:x + w]
 
-            if roi.shape[0] == roi.shape[1] and roi.shape[0] > 200:
+            if roi.shape[0] == roi.shape[1]:
                 break
 
         if roi is None:
@@ -141,3 +141,4 @@ class cvHandler:
                     y = y + self.boardLoc[1] + 5
                     mouse.move(x, y)
                     mouse.double_click()
+        return True
