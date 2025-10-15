@@ -1,3 +1,5 @@
+import math
+
 import cv2 as cv
 from imutils import contours
 import pyautogui
@@ -77,7 +79,7 @@ class cvHandler:
         # cv.imshow("Board", roi)
         # cv.waitKey(0)
 
-    def parse_board(self, size: int):
+    def parse_board(self):
         if not self.boardImg:
             self.find_board()
 
@@ -85,6 +87,8 @@ class cvHandler:
 
         board = []
         row = []
+        size = int(math.sqrt(len(cnts)))
+
         for (i, c) in enumerate(cnts, 1):
             area = cv.contourArea(c)
             if area < 50000:
@@ -126,7 +130,7 @@ class cvHandler:
             unparsed_board = unparsed_board[:-1]
             unparsed_board += "\n"
 
-        return unparsed_board[:-1]
+        return unparsed_board[:-1], size
 
     def autoSolve(self, solved_board: Board):
         if not solved_board.isWon() or self.boardImg is None or self.cellIterBoard is None:

@@ -6,12 +6,11 @@ import time
 
 
 def main():
-    size = int(input("Board Size: "))
 
     for _ in range(100):
         start = time.thread_time()
         mycv = cvHandler()
-        unparsed = mycv.parse_board(size)
+        unparsed, size = mycv.parse_board()
         myBoard = Board(raw=unparsed, size=size)
 
         print(myBoard)
