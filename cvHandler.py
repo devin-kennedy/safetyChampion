@@ -52,7 +52,7 @@ class cvHandler:
         cv.imshow("Screen", self.img)
         cv.waitKey(0)
 
-    def find_board(self):
+    def find_board(self, imshow_board=False):
         ret, binary = cv.threshold(self.gray, 100, 255, cv.THRESH_OTSU)
         inverted_binary = ~binary
 
@@ -66,8 +66,8 @@ class cvHandler:
             cv.rectangle(thisImg, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
             roi = thisImg[y:y + h, x:x + w]
-
-            if roi.shape[0] == roi.shape[1]:
+            diff = abs(int(roi.shape[0]) - int(roi.shape[1]))
+            if diff <= 6:
                 break
 
         if roi is None:
@@ -76,12 +76,13 @@ class cvHandler:
         self.boardImg = roi
         self.boardLoc = (x, y)
 
-        # cv.imshow("Board", roi)
-        # cv.waitKey(0)
+        if imshow_board:
+            cv.imshow("Board", roi)
+            cv.waitKey(0)
 
-    def parse_board(self):
+    def parse_board(self, imshow_board=False, cell_detection_tolerance=5):
         if not self.boardImg:
-            self.find_board()
+            self.find_board(imshow_board)
 
         grayBoard, thresh, cnts = self.__thresh_board()
 
@@ -118,7 +119,7 @@ class cvHandler:
                 b = np.mean(cropped[:, :, 0])
                 g = np.mean(cropped[:, :, 1])
                 r = np.mean(cropped[:, :, 2])
-                knownColor = check_rgb((r, g, b), list(color_values.keys()), 5)
+                knownColor = check_rgb((r, g, b), list(color_values.keys()), cell_detection_tolerance)
 
                 if knownColor is None:
                     color_values[(r, g, b)] = unusedColors[0]

@@ -1,3 +1,5 @@
+import random
+
 
 # Returns the x, y coordinate of a 1d list in a 2d array with a given size
 def xy_by_index(i: int, size: int):
@@ -36,3 +38,8 @@ def check_rgb(cell_rgb: tuple, all_rgb: list, tolerance: int):
         if dr <= tolerance and dg <= tolerance and db <= tolerance:
             return v
     return None
+
+
+def generate_board(n: int):
+    empty_board = []
+

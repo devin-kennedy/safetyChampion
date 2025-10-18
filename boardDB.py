@@ -43,9 +43,10 @@ allColors = {
     "ye": "Yellow",
     "re": "Red",
     "br": "Brown",
-    "bk": "Black"
+    "bk": "Black",
+    "te": "Teal",
 }
 
-colorIcons = dict(zip(list(allColors.keys()), ["🟪", "🟧", "🟦", "🟩", "🔲", "🟨", "🟥", "🟫", "🔳"]))
+colorIcons = dict(zip(list(allColors.keys()), ["🟪", "🟧", "🟦", "🟩", "🔲", "🟨", "🟥", "🟫", "🔳", "⏹️"]))
 
 validStates = ["E", "Q", "X"]
